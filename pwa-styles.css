@@ -1,0 +1,254 @@
+/* ============================================================
+   ExcuseGen — pwa-styles.css
+   PWA-specific styles: install banner · update banner
+   standalone mode · splash adjustments
+   Add <link rel="stylesheet" href="pwa-styles.css"> to all pages
+   ============================================================ */
+
+/* ── INSTALL BANNER ──────────────────────────────────────────── */
+/* Slides up from bottom — encourages "Add to Home Screen" */
+
+.pwa-install-banner {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 800;
+  background: #0d1219;
+  border-top: 2px solid #22c55e;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+  animation: slideUp 0.4s ease both;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.pwa-install-banner .pwa-icon {
+  width: 48px; height: 48px;
+  background: #22c55e;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.pwa-install-banner .pwa-text {
+  flex: 1;
+  min-width: 0;
+}
+.pwa-install-banner .pwa-text strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.pwa-install-banner .pwa-text span {
+  font-size: 0.78rem;
+  color: #5a6a80;
+}
+
+.pwa-banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-install {
+  background: #22c55e;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-install:hover { background: #16a34a; transform: translateY(-1px); }
+
+.btn-dismiss-pwa {
+  background: transparent;
+  color: #5a6a80;
+  font-size: 0.82rem;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.07);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-dismiss-pwa:hover { color: #dde6f2; border-color: rgba(255,255,255,0.15); }
+
+/* ── UPDATE BANNER ───────────────────────────────────────────── */
+/* Appears at top when a new version of the app is available */
+
+.pwa-update-banner {
+  position: fixed;
+  top: 62px; /* below navbar */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 800;
+  background: #1e3a2f;
+  border: 1px solid #22c55e;
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  animation: fadeDown 0.4s ease both;
+  white-space: nowrap;
+  max-width: calc(100% - 48px);
+}
+
+@keyframes fadeDown {
+  from { transform: translateX(-50%) translateY(-16px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);     opacity: 1; }
+}
+
+.pwa-update-banner span {
+  font-size: 0.85rem;
+  color: #dde6f2;
+}
+
+.btn-update {
+  background: #22c55e;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-update:hover { background: #16a34a; }
+
+/* ── STANDALONE MODE ADJUSTMENTS ─────────────────────────────── */
+/* When running as installed app (no browser chrome) */
+
+/* iOS safe area padding (notch/home indicator) */
+.pwa-standalone .navbar {
+  padding-top: env(safe-area-inset-top);
+  height: calc(62px + env(safe-area-inset-top));
+}
+
+.pwa-standalone .page-body {
+  padding-top: calc(62px + env(safe-area-inset-top));
+}
+
+/* Hide browser-only elements when in app mode */
+.pwa-standalone .ad-slot {
+  display: none; /* Hide ads in standalone for better app feel */
+}
+
+/* Bottom navigation bar for standalone mode */
+.pwa-bottom-nav {
+  display: none; /* Hidden in browser */
+}
+
+.pwa-standalone .pwa-bottom-nav {
+  display: flex;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 90;
+  background: rgba(8,12,19,0.97);
+  border-top: 1px solid rgba(34,197,94,0.15);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pwa-bottom-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 4px;
+  text-decoration: none;
+  color: #4e6280;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.pwa-bottom-nav a:hover,
+.pwa-bottom-nav a.active { color: #22c55e; }
+.pwa-bottom-nav .nav-icon { font-size: 1.3rem; line-height: 1; }
+
+/* Extra bottom padding in standalone so content clears bottom nav */
+.pwa-standalone main {
+  padding-bottom: 70px;
+}
+
+/* ── MOBILE EXPERIENCE IMPROVEMENTS ──────────────────────────── */
+
+/* Prevent text selection on buttons (feels more native) */
+.btn, .tone-btn, .btn-act, .btn-generate {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Smooth scroll on iOS */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better tap targets on mobile */
+@media (max-width: 768px) {
+  .btn-act {
+    min-height: 44px; /* Apple HIG minimum tap target */
+  }
+  .tone-btn {
+    min-height: 44px;
+  }
+  .form-input,
+  .form-select {
+    font-size: 16px !important; /* Prevent iOS zoom on input focus */
+    min-height: 48px;
+  }
+}
+
+/* ── SPLASH SCREEN FADE ───────────────────────────────────────── */
+/* Smooth transition when app loads from home screen */
+
+.pwa-splash {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #080c13;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px;
+  animation: splashFadeOut 0.5s 1.2s ease both;
+  pointer-events: none;
+}
+
+@keyframes splashFadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.pwa-splash .splash-logo {
+  font-size: 2rem; font-weight: 800;
+  color: #fff; letter-spacing: -0.02em;
+}
+.pwa-splash .splash-logo span { color: #22c55e; }
+
+.pwa-splash .splash-loader {
+  width: 40px; height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px; overflow: hidden;
+}
+.pwa-splash .splash-loader::after {
+  content: '';
+  display: block; height: 100%;
+  background: #22c55e;
+  animation: loadBar 1s ease both;
+}
+@keyframes loadBar { from { width: 0; } to { width: 100%; } }
