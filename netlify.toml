@@ -1,0 +1,67 @@
+# ============================================================
+# ExcuseGen — netlify.toml
+# Netlify configuration for PWA support
+# ============================================================
+
+[build]
+  publish = "."
+
+# ── Security & PWA Headers ───────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options         = "SAMEORIGIN"
+    X-XSS-Protection        = "1; mode=block"
+    X-Content-Type-Options  = "nosniff"
+    Referrer-Policy         = "strict-origin-when-cross-origin"
+
+    # PWA: Allow service worker full scope
+    Service-Worker-Allowed  = "/"
+
+# ── Cache: HTML (no cache — always fresh) ────────────────────
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ── Cache: Service Worker (never cache SW itself!) ───────────
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ── Cache: manifest.json (short cache) ───────────────────────
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# ── Cache: CSS + JS (long cache with versioning) ─────────────
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── Cache: Icons (long cache) ────────────────────────────────
+[[headers]]
+  for = "/icons/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── Redirects: Clean URLs ─────────────────────────────────────
+[[redirects]]
+  from   = "/home"
+  to     = "/"
+  status = 301
+
+# ── 404 Fallback ─────────────────────────────────────────────
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
