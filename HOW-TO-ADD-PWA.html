@@ -1,0 +1,94 @@
+<!-- ============================================================
+     ExcuseGen PWA — INSTRUCTIONS
+     ============================================================
+
+     أضف الكود التالي لكل ملف HTML عندك (index.html, about.html, إلخ)
+
+     ═══════════════════════════════════════════════════════════
+     1. الكود الذي يُضاف داخل <head> (قبل </head>)
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json" />
+
+<!-- PWA Theme Colors -->
+<meta name="theme-color" content="#22c55e" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<!-- iOS PWA Support -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="ExcuseGen" />
+
+<!-- iOS Icons (Apple doesn't use manifest icons) -->
+<link rel="apple-touch-icon" href="/icons/icon-152.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png" />
+<link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
+
+<!-- iOS Splash Screens (optional but improves launch experience) -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- Windows / Microsoft -->
+<meta name="msapplication-TileColor" content="#080c13" />
+<meta name="msapplication-TileImage" content="/icons/icon-144.png" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-72.png" />
+
+<!-- PWA Styles -->
+<link rel="stylesheet" href="/pwa-styles.css" />
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     2. الكود الذي يُضاف مباشرة بعد <body> (أول شيء في الـ body)
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Splash screen (shown for ~1.2s when launching from home screen) -->
+<div class="pwa-splash" id="pwaSplash" aria-hidden="true">
+  <div class="splash-logo">Excuse<span>Gen</span> ⚡</div>
+  <div class="splash-loader"></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     3. Bottom Navigation Bar (shown only in standalone/app mode)
+        أضفه مباشرة قبل </body>
+     ═══════════════════════════════════════════════════════════ -->
+
+<nav class="pwa-bottom-nav" aria-label="App navigation">
+  <a href="/index.html" class="active">
+    <span class="nav-icon">⚡</span>
+    Generator
+  </a>
+  <a href="/about.html">
+    <span class="nav-icon">ℹ️</span>
+    About
+  </a>
+  <a href="/contact.html">
+    <span class="nav-icon">✉️</span>
+    Contact
+  </a>
+</nav>
+
+<!-- Install Banner (shown after 30s if not yet installed) -->
+<div class="pwa-install-banner" id="pwaInstallBanner" hidden>
+  <div class="pwa-icon">⚡</div>
+  <div class="pwa-text">
+    <strong>Install ExcuseGen</strong>
+    <span>Add to home screen for instant access</span>
+  </div>
+  <div class="pwa-banner-actions">
+    <button class="btn-install" onclick="triggerInstallPrompt()">Install</button>
+    <button class="btn-dismiss-pwa" onclick="dismissInstallBanner()">✕</button>
+  </div>
+</div>
+
+<!-- Update Banner (shown when new app version is available) -->
+<div class="pwa-update-banner" id="pwaUpdateBanner" hidden>
+  <span>🎉 New version available!</span>
+  <button class="btn-update" onclick="applyUpdate()">Update Now</button>
+</div>
+
+<!-- PWA Script (must come AFTER script.js) -->
+<script src="/pwa.js"></script>
